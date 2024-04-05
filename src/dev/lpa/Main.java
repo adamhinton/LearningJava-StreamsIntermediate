@@ -43,6 +43,9 @@ public class Main {
     // Intellij intelligently shows final stream type, cool
         var stream = Stream.iterate(0, i -> i < maxSeats, i -> i + 1)
                 .map(i -> new Seat((char) ('A' + i / seatsInRow), i % seatsInRow + 1))
+                .skip(5)
+                .limit(10)
+                .peek(s -> System.out.println("--> " + s))
                 .sorted(Comparator.comparing(Seat::price)               .thenComparing(Seat::toString));
 //                .mapToDouble(Seat::price)
 //                .boxed()
@@ -57,5 +60,9 @@ public class Main {
 //        Peek takes a Consumer
         // It's not supposed to have sideffects on stream mbrs
         // supposed to just be a logging tool
+
+
+        System.out.println("----------");
+
     }
 }
