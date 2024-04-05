@@ -34,5 +34,22 @@ public class Main {
                 .sorted()
                 .forEach(d-> System.out.printf("%c", d));
 
+
+
+    System.out.println("---------------------");
+    int maxSeats = 100;
+    int seatsInRow = 10;
+    // Intellij intelligently shows final stream type, cool
+    var stream = Stream.iterate(0, i -> i < maxSeats, i -> i+1)
+            // THis is now a stream of Seats
+                .map(i-> new Seat((char) ('A' + i / seatsInRow),
+                        i & seatsInRow + 1))
+                        .map(Seat::toString);
+
+
+        stream.forEach(System.out::println);
+
+
+
     }
 }
