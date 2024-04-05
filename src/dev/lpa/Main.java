@@ -1,5 +1,6 @@
 package dev.lpa;
 
+import java.util.Comparator;
 import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -40,16 +41,21 @@ public class Main {
     int maxSeats = 100;
     int seatsInRow = 10;
     // Intellij intelligently shows final stream type, cool
-    var stream = Stream.iterate(0, i -> i < maxSeats, i -> i+1)
-            // THis is now a stream of Seats
-                .map(i-> new Seat((char) ('A' + i / seatsInRow),
-                        i & seatsInRow + 1))
-                        .map(Seat::toString);
+        var stream = Stream.iterate(0, i -> i < maxSeats, i -> i + 1)
+                .map(i -> new Seat((char) ('A' + i / seatsInRow), i % seatsInRow + 1))
+                .sorted(Comparator.comparing(Seat::price)               .thenComparing(Seat::toString));
+//                .mapToDouble(Seat::price)
+//                .boxed()
+//                .map("%.2f"::formatted);
 
 
         stream.forEach(System.out::println);
 
 
 
+        System.out.println("----------");
+//        Peek takes a Consumer
+        // It's not supposed to have sideffects on stream mbrs
+        // supposed to just be a logging tool
     }
 }
